@@ -17,7 +17,7 @@ class Dispatch {
     this.requestOptions = {
       headers: {
         Accept: "application/json",
-        Authorization: "X-Api-Key: " + this.auth
+        "X-Api-Key": this.auth
       }
     };
   }
@@ -37,15 +37,24 @@ class Dispatch {
     await sleep(delay);
     if(this.continue) {
       this.sendRequest(this.requestInterval);
-      const res = await axios.post(this.url, this.requestPayload(), this.requestOptions);
-      console.log(res.data);
+      const res = await axios.post(this.url, this.requestPayload(), this.requestOptions)
+        .catch(error => {
+          if(error && error.response) {
+            console.log(error.response.status);
+            console.log(error.response.data);
+          }
+        });
+      if(res && res.data) {
+        console.log(res.data);
+      }
     }
   }
 
   requestPayload() {
+    this.requestCount++;
     return {
       name: this.user,
-      date: Date.now(),
+      date: Date.now().toString(),
       requests_sent: this.requestCount
     }
   }
