@@ -1,4 +1,5 @@
 const axios = require("axios");
+const config = require('../config');
 
 function sleep(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -6,30 +7,26 @@ function sleep(seconds) {
 
 class Dispatch {
 
-  constructor({url, auth, rps}){
-    this.url = url;
-    this.auth = auth;
-    this.rps = rps;
+  constructor(){
     this.continue = false;
-    this.requestInterval = 1 / rps;
+    this.requestInterval = 1 / config.rps;
     this.requestCount = 0;
-    this.user = "Anonymous";
     this.requestOptions = {
       headers: {
         Accept: "application/json",
-        "X-Api-Key": this.auth
+        "X-Api-Key": config.auth
       }
     };
   }
 
   start() {
-    console.log("Starting dispatch for " + this.url + " at " + this.rps + " RPS");
+    console.log("Starting dispatch for " + config.url + " at " + config.rps + " RPS");
     this.continue = true;
     this.sendRequest();
   }
 
   stop() {
-    console.log("Stopping dispatch for " + this.url);
+    console.log("Stopping dispatch for " + config.url);
     this.continue = false;
   }
 
@@ -37,7 +34,7 @@ class Dispatch {
     await sleep(delay);
     if(this.continue) {
       this.sendRequest(this.requestInterval);
-      const res = await axios.post(this.url, this.requestPayload(), this.requestOptions)
+      const res = await axios.post(config.url, this.requestPayload(), this.requestOptions)
         .catch(error => {
           if(error && error.response) {
             console.log(error.response.status);
@@ -53,7 +50,7 @@ class Dispatch {
   requestPayload() {
     this.requestCount++;
     return {
-      name: this.user,
+      name: config.user,
       date: Date.now().toString(),
       requests_sent: this.requestCount
     }
