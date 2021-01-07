@@ -2,12 +2,8 @@ const yargs = require("yargs");
 
 class CLI {
 
-  start(){
-    this.captureArgConfig();
-  }
-
-  captureArgConfig(){
-    const options = yargs
+  constructor(){
+    this.options =yargs
       .usage("Usage: -u <url>")
 
       .option("u", { 
@@ -32,13 +28,10 @@ class CLI {
       })
 
       .argv;
+  }
 
-
-    let args = "";
-    args += "URL:, " + options.url + '\n';
-    args += "Auth:, " + options.auth + '\n';
-    args += "RPS:, " + options.rps + '\n';
-    console.log(args);
+  start(){
+    
   }
 }
 
