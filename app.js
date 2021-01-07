@@ -1,6 +1,6 @@
 const CLI = require('./cli');
 const Dispatch = require('./dispatch');
-const event = require('./eventManager');
+const event = require('./event');
 const config = require('./config');
 
 const cli = new CLI();
