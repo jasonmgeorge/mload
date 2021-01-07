@@ -63,7 +63,7 @@ class Dispatch {
     this.requestCount++;
     return {
       name: config.name,
-      date: Date.now().toString(),
+      date: new Date().toISOString(),
       requests_sent: this.requestCount
     }
   }
