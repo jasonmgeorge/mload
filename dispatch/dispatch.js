@@ -21,15 +21,16 @@ class Dispatch {
   }
 
   stop() {
-
+    console.log("Stopping dispatch for " + this.url);
+    this.continue = false;
   }
 
   async sendRequest(delay) {
+    await sleep(delay);
     if(this.continue) {
-      await sleep(delay);
       this.sendRequest(this.requestInterval);
+      const res = await axios.get(this.url, {headers: { Accept: "application/json" }});
     }
-    const res = await axios.get(this.url, {headers: { Accept: "application/json" }});
   }
 }
 
