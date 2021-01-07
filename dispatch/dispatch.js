@@ -1,5 +1,6 @@
 const axios = require("axios");
 const config = require('../config');
+const event = require('../event');
 
 function sleep(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -33,14 +34,22 @@ class Dispatch {
     await sleep(delay);
     if(this.continue) {
       this.sendRequest(this.requestInterval());
+
+      event.emit('request');
       const res = await axios.post(config.url, this.requestPayload(), this.requestOptions)
         .catch(error => {
           if(error && error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
+            event.emit('error', {
+              status: error.response.status,
+              data: error.response.data
+            });
           }
         });
+
       if(res && res.data) {
+        event.emit('success', {
+          status: res.status
+        });
         console.log(res.data);
       }
     }
