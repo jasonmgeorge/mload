@@ -9,7 +9,6 @@ class Dispatch {
 
   constructor(){
     this.continue = false;
-    this.requestInterval = 1 / config.rps;
     this.requestCount = 0;
     this.requestOptions = {
       headers: {
@@ -33,7 +32,7 @@ class Dispatch {
   async sendRequest(delay) {
     await sleep(delay);
     if(this.continue) {
-      this.sendRequest(this.requestInterval);
+      this.sendRequest(this.requestInterval());
       const res = await axios.post(config.url, this.requestPayload(), this.requestOptions)
         .catch(error => {
           if(error && error.response) {
@@ -45,6 +44,10 @@ class Dispatch {
         console.log(res.data);
       }
     }
+  }
+
+  requestInterval() {
+    return 1 / config.rps;
   }
 
   requestPayload() {
