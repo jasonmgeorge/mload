@@ -10,8 +10,16 @@ class Dispatch {
     this.url = url;
     this.auth = auth;
     this.rps = rps;
-    this.requestInterval = 1 / rps;
     this.continue = false;
+    this.requestInterval = 1 / rps;
+    this.requestCount = 0;
+    this.user = "Anonymous";
+    this.requestOptions = {
+      headers: {
+        Accept: "application/json",
+        Authorization: "X-Api-Key: " + this.auth
+      }
+    };
   }
 
   start() {
@@ -29,7 +37,16 @@ class Dispatch {
     await sleep(delay);
     if(this.continue) {
       this.sendRequest(this.requestInterval);
-      const res = await axios.get(this.url, {headers: { Accept: "application/json" }});
+      const res = await axios.post(this.url, this.requestPayload(), this.requestOptions);
+      console.log(res.data);
+    }
+  }
+
+  requestPayload() {
+    return {
+      name: this.user,
+      date: Date.now(),
+      requests_sent: this.requestCount
     }
   }
 }
