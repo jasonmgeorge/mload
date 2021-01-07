@@ -18,17 +18,17 @@ class Metrics {
   start() {
     let self = this;
 
-    event.on('request', function() {
+    event.on('apiRequest', function() {
       self.requestCount++;
     });
 
-    event.on('success', function(data) {
+    event.on('successResponse', function(data) {
       self.responseCount++;
       self.successCount++;
       self.mapStatus(data.status);
     });
 
-    event.on('error', function(data) {
+    event.on('errorResponse', function(data) {
       self.responseCount++;
       self.errorCount++;
       self.mapStatus(data.status);
@@ -46,10 +46,10 @@ class Metrics {
 
   toString() {
     let metricsString = "";
-    metricsString += "Total Requests: " + this.requestCount + '\n';
-    metricsString += "Total Responses: " + this.responseCount + '\n';
-    metricsString += "Total Successes: " + this.successCount + '\n';
-    metricsString += "Failure Rate: " + (100 * this.errorCount / this.requestCount) + '%\n';
+    metricsString += "Requests:\t" + this.requestCount + '\n';
+    metricsString += "Responses:\t" + this.responseCount + '\n';
+    metricsString += "Successes:\t" + this.successCount + '\n';
+    metricsString += "Failure Rate:\t" + (100 * this.errorCount / this.requestCount) + '%\n';
     metricsString += "Response Map: " + '\n';
 
     for(const status in this.responseMap) {

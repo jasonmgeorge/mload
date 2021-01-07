@@ -35,11 +35,11 @@ class Dispatch {
     if(this.continue) {
       this.sendRequest(this.requestInterval());
 
-      event.emit('request');
+      event.emit('apiRequest');
       const res = await axios.post(config.url, this.requestPayload(), this.requestOptions)
         .catch(error => {
           if(error && error.response) {
-            event.emit('error', {
+            event.emit('errorResponse', {
               status: error.response.status,
               data: error.response.data
             });
@@ -47,7 +47,7 @@ class Dispatch {
         });
 
       if(res && res.data) {
-        event.emit('success', {
+        event.emit('successResponse', {
           status: res.status
         });
         console.log(res.data);
