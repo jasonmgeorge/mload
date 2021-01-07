@@ -1,6 +1,6 @@
 const yargs = require("yargs");
 const readline = require("readline");
-const config = require('../config');
+const event = require('../eventManager');
 
 class CLI {
 
@@ -50,7 +50,7 @@ class CLI {
     rl.on('line', function(line) {
       switch(line.trim()) {
         case 'stop':
-          console.log("Received Stop Command");
+          event.emit('stop');
           rl.close();
           break;
         case 'help':
