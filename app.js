@@ -1,1 +1,4 @@
-console.log("Hello World");
+const CLI = require('./cli');
+
+const cli = new CLI();
+cli.start();
