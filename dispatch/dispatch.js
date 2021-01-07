@@ -53,7 +53,7 @@ class Dispatch {
   requestPayload() {
     this.requestCount++;
     return {
-      name: config.user,
+      name: config.name,
       date: Date.now().toString(),
       requests_sent: this.requestCount
     }

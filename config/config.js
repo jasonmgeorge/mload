@@ -1,13 +1,13 @@
 class Config {
   constructor(){
-    this.user = "Anonymous";
+    this.name = "Anonymous";
     this.url = undefined
     this.auth = undefined;
     this.rps = undefined;
   }
 
-  set({user = "Anonymous", url, auth, rps}) {
-    this.user = user ? user : this.user;
+  set({name = "Anonymous", url, auth, rps}) {
+    this.name = name ? name : this.name;
     this.url = url ? url : this.url;
     this.auth = auth ? auth : this.auth;
     this.rps = rps ? rps : this.rps;

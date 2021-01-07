@@ -27,6 +27,13 @@ class CLI {
         demandOption: true
       })
 
+      .option("n", { 
+        alias: "name",
+        describe: "User name to be sent in request payload",
+        type: "string",
+        demandOption: false
+      })
+
       .argv;
   }
 
