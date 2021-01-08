@@ -12,10 +12,11 @@ class Dispatch {
     this.isActive = false;
     this.requestCount = 0;
     this.requestOptions = {
+      timeout: 5000,
       headers: {
         Accept: "application/json",
         "X-Api-Key": config.auth
-      }
+      },
     };
   }
 
