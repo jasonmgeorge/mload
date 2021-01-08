@@ -52,7 +52,6 @@ class Dispatch {
         event.emit('successResponse', {
           status: res.status
         });
-        console.log(res.data);
       }
     }
   }

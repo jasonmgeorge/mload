@@ -56,33 +56,55 @@ class Metrics {
   }
 
   toString() {
-    let executionTime = ((this.stopTime - this.startTime) / 1000);
-    let rps = this.requestCount / executionTime;
-    const failureRate = (100 * this.errorCount / this.requestCount);
-
     let metricsString = "";
     metricsString += '\n';
     metricsString += '------------------------------------------------------------\n';
-    metricsString += "Execution Time: " + executionTime + " seconds\n";
-    metricsString += "RPS Target: " + config.rps + '\n';
-    metricsString += "RPS Actual: " + rps + '\n';
+    metricsString += this.statusString();
     metricsString += '\n';
     metricsString += '------------------------------------------------------------\n';
-    metricsString += "Requests:\t" + this.requestCount + '\n';
-    metricsString += "Responses:\t" + this.responseCount + '\n';
-    metricsString += "Successes:\t" + this.successCount + '\n';
-    metricsString += "Failure Rate:\t" + failureRate + '%\n';
+    metricsString += this.countString();
     metricsString += '\n';
     metricsString += '------------------------------------------------------------\n';
-    metricsString += "Response Map: " + '\n';
-    for(const status in this.responseMap) {
-      metricsString += " [" + status + "]: " + this.responseMap[status] + '\n';
-    }
-    metricsString += '\n';
+    metricsString += this.responseMapString();
     metricsString += '------------------------------------------------------------\n';
 
     return metricsString;
   }
+
+  statusString() {
+    const stopTime = this.stopTime ? this.stopTime : Date.now();
+    const executionTime = ((stopTime - this.startTime) / 1000);
+    const rps = this.requestCount / executionTime;
+
+
+    let statusToString = "";
+    statusToString += "Execution Time: " + executionTime + " seconds\n";
+    statusToString += "RPS Target: " + config.rps + '\n';
+    statusToString += "RPS Actual: " + rps + '\n';
+    return statusToString;
+  }
+
+  countString() {
+    const failureRate = (100 * this.errorCount / this.requestCount);
+
+    let countString = "";
+    countString += "Requests:\t" + this.requestCount + '\n';
+    countString += "Responses:\t" + this.responseCount + '\n';
+    countString += "Successes:\t" + this.successCount + '\n';
+    countString += "Failure Rate:\t" + failureRate + '%\n';
+    return countString;
+  }
+
+  responseMapString() {
+    let responseMapString = "";
+    responseMapString += "Response Map: " + '\n';
+    for(const status in this.responseMap) {
+      responseMapString += " [" + status + "]: " + this.responseMap[status] + '\n';
+    }
+    return responseMapString;
+  }
+
+
 }
 
 module.exports = Metrics;

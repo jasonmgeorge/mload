@@ -17,3 +17,5 @@ event.on('stop', function() {
   dispatch.stop();
   console.log(metrics.toString());
 })
+
+cli.output(metrics.statusString());

@@ -37,21 +37,22 @@ class CLI {
       })
 
       .argv;
+    
+    this.rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+    this.rl.setPrompt('> ');
   }
 
   start(){
-    let rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    rl.setPrompt('mload> ');
-    rl.prompt();
-    rl.on('line', function(line) {
+    const self = this;
+    this.rl.prompt();
+    this.rl.on('line', function(line) {
       switch(line.trim()) {
         case 'stop':
           event.emit('stop');
-          rl.close();
+          self.rl.close();
           break;
         case 'help':
         default:
@@ -59,6 +60,11 @@ class CLI {
           break;
       }
     })
+  }
+
+  output(message){
+    console.log('\n' + message);
+    this.rl.prompt();
   }
 }
 
