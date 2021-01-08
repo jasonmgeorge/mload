@@ -20,14 +20,12 @@ class Dispatch {
   }
 
   start() {
-    console.log("Starting dispatch for " + config.url + " at " + config.rps + " RPS");
     this.continue = true;
     event.emit('dispatchStart');
     this.sendRequest();
   }
 
   stop() {
-    console.log("Stopping dispatch for " + config.url);
     this.continue = false;
     event.emit('dispatchStop');
   }

@@ -15,12 +15,13 @@ const dispatch = new Dispatch(cli.options);
 dispatch.start();
 
 event.on('metrics:status', function(message) {
-  cli.displayHeaderMessage(metrics.statusString());
+  cli.displayMessage(metrics.statusString());
 })
 
 event.on('stop', function() {
   dispatch.stop();
   metrics.stop();
-  console.log(metrics.toString());
+  cli.stop();
+  cli.displayMessage(metrics.toString());
 });
 

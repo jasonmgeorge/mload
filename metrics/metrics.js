@@ -6,7 +6,6 @@ class Metrics {
 
   constructor(){
     this.init();
-    console.log(this.requestCount);
   }
 
   init() {
@@ -75,7 +74,6 @@ class Metrics {
 
   toString() {
     let metricsString = "";
-    metricsString += '\n';
     metricsString += '------------------------------------------------------------\n';
     metricsString += this.statusString();
     metricsString += '\n';

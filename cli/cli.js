@@ -1,5 +1,6 @@
 const yargs = require("yargs");
 const readline = require("readline");
+const config = require('../config');
 const event = require('../event');
 
 class CLI {
@@ -43,31 +44,40 @@ class CLI {
         output: process.stdout
       });
     this.rl.setPrompt('> ');
+
+    this.active = false;
   }
 
   start(){
     const self = this;
-    this.rl.prompt();
+    this.active = true;
     this.rl.on('line', function(line) {
       switch(line.trim()) {
         case 'stop':
           event.emit('stop');
           self.rl.close();
           break;
-        case 'help':
-        default:
-          console.log('Type "stop" to stop sending requests');
-          break;
       }
     })
   }
 
-  displayHeaderMessage(message){
+  stop(){
+    this.active = false;
+  }
+
+  displayMessage(message){
     readline.cursorTo(process.stdout, 0, 0);
     readline.clearScreenDown(process.stdout);
-    console.log();
+
+    if(this.active) {
+      console.log('Type "stop" to stop sending requests');
+      console.log();
+      console.log("Executing load test for " + config.url);
+    }
     console.log(message);
-    this.rl.prompt(true);
+    if(this.active) {
+      this.rl.prompt(true);
+    }
   }
 }
 
