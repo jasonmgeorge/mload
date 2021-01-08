@@ -62,8 +62,11 @@ class CLI {
     })
   }
 
-  output(message){
-    console.log('\n' + message);
+  displayHeaderMessage(message){
+    readline.cursorTo(process.stdout, 0, 0);
+    readline.clearScreenDown(process.stdout);
+    console.log();
+    console.log(message);
     this.rl.prompt(true);
   }
 }

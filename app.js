@@ -15,7 +15,7 @@ const dispatch = new Dispatch(cli.options);
 dispatch.start();
 
 event.on('metrics:status', function(message) {
-  cli.output(metrics.statusString());
+  cli.displayHeaderMessage(metrics.statusString());
 })
 
 event.on('stop', function() {
