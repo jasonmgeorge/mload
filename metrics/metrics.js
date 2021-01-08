@@ -1,5 +1,5 @@
-const event = require('../event');
-const config = require('../config');
+const event = require('../event/event.js');
+const config = require('../config/config.js');
 const sleep = require('../sleep/sleep.js');
 
 class Metrics {

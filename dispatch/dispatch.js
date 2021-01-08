@@ -1,6 +1,6 @@
 const axios = require("axios");
-const config = require('../config');
-const event = require('../event');
+const config = require('../config/config.js');
+const event = require('../event/event.js');
 
 function sleep(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));

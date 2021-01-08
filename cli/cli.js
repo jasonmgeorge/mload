@@ -1,7 +1,7 @@
 const yargs = require("yargs");
 const readline = require("readline");
-const config = require('../config');
-const event = require('../event');
+const config = require('../config/config.js');
+const event = require('../event/event.js');
 
 class CLI {
 

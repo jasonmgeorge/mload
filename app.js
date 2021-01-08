@@ -1,8 +1,8 @@
-const CLI = require('./cli');
-const Dispatch = require('./dispatch');
-const Metrics = require('./metrics');
-const event = require('./event');
-const config = require('./config');
+const CLI = require('./cli/cli.js');
+const Dispatch = require('./dispatch/dispatch.js');
+const Metrics = require('./metrics/metrics.js');
+const event = require('./event/event.js');
+const config = require('./config/config.js');
 
 const cli = new CLI();
 config.set(cli.options);
