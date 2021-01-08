@@ -18,7 +18,7 @@ event.on('metrics:status', function(message) {
   cli.displayMessage(metrics.statusString());
 })
 
-event.on('stop', function() {
+event.on('cli:stop', function() {
   dispatch.stop();
   metrics.stop();
   cli.stop();

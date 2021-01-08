@@ -54,7 +54,7 @@ class CLI {
     this.rl.on('line', function(line) {
       switch(line.trim()) {
         case 'stop':
-          event.emit('stop');
+          event.emit('cli:stop');
           self.rl.close();
           break;
       }

@@ -21,13 +21,13 @@ class Dispatch {
 
   start() {
     this.continue = true;
-    event.emit('dispatchStart');
+    event.emit('dispatch:start');
     this.sendRequest();
   }
 
   stop() {
     this.continue = false;
-    event.emit('dispatchStop');
+    event.emit('dispatch:stop');
   }
 
   async sendRequest(delay) {
@@ -35,11 +35,11 @@ class Dispatch {
     if(this.continue) {
       this.sendRequest(this.requestInterval());
 
-      event.emit('apiRequest');
+      event.emit('dispatch:apiRequest');
       const res = await axios.post(config.url, this.requestPayload(), this.requestOptions)
         .catch(error => {
           if(error && error.response) {
-            event.emit('errorResponse', {
+            event.emit('dispatch:errorResponse', {
               status: error.response.status,
               data: error.response.data
             });
@@ -47,7 +47,7 @@ class Dispatch {
         });
 
       if(res && res.data) {
-        event.emit('successResponse', {
+        event.emit('dispatch:successResponse', {
           status: res.status
         });
       }

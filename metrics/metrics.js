@@ -23,25 +23,25 @@ class Metrics {
   start() {
     let self = this;
 
-    event.on('dispatchStart', function() {
+    event.on('dispatch:start', function() {
       self.startTime = Date.now();
     });
 
-    event.on('dispatchStop', function() {
+    event.on('dispatch:stop', function() {
       self.stopTime = Date.now();
     });
 
-    event.on('apiRequest', function() {
+    event.on('dispatch:apiRequest', function() {
       self.requestCount++;
     });
 
-    event.on('successResponse', function(data) {
+    event.on('dispatch:successResponse', function(data) {
       self.responseCount++;
       self.successCount++;
       self.mapStatus(data.status);
     });
 
-    event.on('errorResponse', function(data) {
+    event.on('dispatch:errorResponse', function(data) {
       self.responseCount++;
       self.errorCount++;
       self.mapStatus(data.status);
