@@ -9,7 +9,7 @@ function sleep(seconds) {
 class Dispatch {
 
   constructor(){
-    this.continue = false;
+    this.isActive = false;
     this.requestCount = 0;
     this.requestOptions = {
       headers: {
@@ -20,19 +20,19 @@ class Dispatch {
   }
 
   start() {
-    this.continue = true;
+    this.isActive = true;
     event.emit('dispatch:start');
     this.sendRequest();
   }
 
   stop() {
-    this.continue = false;
+    this.isActive = false;
     event.emit('dispatch:stop');
   }
 
   async sendRequest(delay) {
     await sleep(delay);
-    if(this.continue) {
+    if(this.isActive) {
       this.sendRequest(this.requestInterval());
 
       event.emit('dispatch:apiRequest');

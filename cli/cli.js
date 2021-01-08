@@ -45,12 +45,12 @@ class CLI {
       });
     this.rl.setPrompt('> ');
 
-    this.active = false;
+    this.isActive = false;
   }
 
   start(){
     const self = this;
-    this.active = true;
+    this.isActive = true;
     this.rl.on('line', function(line) {
       switch(line.trim()) {
         case 'stop':
@@ -62,20 +62,20 @@ class CLI {
   }
 
   stop(){
-    this.active = false;
+    this.isActive = false;
   }
 
   displayMessage(message){
     readline.cursorTo(process.stdout, 0, 0);
     readline.clearScreenDown(process.stdout);
 
-    if(this.active) {
+    if(this.isActive) {
       console.log('Type "stop" to stop sending requests');
       console.log();
       console.log("Executing load test for " + config.url);
     }
     console.log(message);
-    if(this.active) {
+    if(this.isActive) {
       this.rl.prompt(true);
     }
   }

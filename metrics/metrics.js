@@ -16,7 +16,7 @@ class Metrics {
     this.successCount = 0;
     this.errorCount = 0;
     this.responseMap = {};
-    this.active = false;
+    this.isActive = false;
     this.emitStatusInterval = 1;
   }
 
@@ -47,12 +47,12 @@ class Metrics {
       self.mapStatus(data.status);
     });
 
-    this.active = true;
+    this.isActive = true;
     this.emitStatus();
   }
 
   stop() {
-    this.active = false;
+    this.isActive = false;
   }
 
   mapStatus(status) {
@@ -66,7 +66,7 @@ class Metrics {
 
   async emitStatus() {
     await sleep(this.emitStatusInterval);
-    if(this.active) {
+    if(this.isActive) {
       event.emit('metrics:status',this.statusString());
       this.emitStatus();
     }
