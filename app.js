@@ -13,9 +13,14 @@ metrics.start();
 
 const dispatch = new Dispatch(cli.options);
 dispatch.start();
-event.on('stop', function() {
-  dispatch.stop();
-  console.log(metrics.toString());
+
+event.on('metrics:status', function(message) {
+  cli.output(metrics.statusString());
 })
 
-cli.output(metrics.statusString());
+event.on('stop', function() {
+  dispatch.stop();
+  metrics.stop();
+  console.log(metrics.toString());
+});
+

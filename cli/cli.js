@@ -64,7 +64,7 @@ class CLI {
 
   output(message){
     console.log('\n' + message);
-    this.rl.prompt();
+    this.rl.prompt(true);
   }
 }
 

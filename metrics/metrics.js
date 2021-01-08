@@ -1,5 +1,6 @@
 const event = require('../event');
 const config = require('../config');
+const sleep = require('../sleep/sleep.js');
 
 class Metrics {
 
@@ -16,6 +17,8 @@ class Metrics {
     this.successCount = 0;
     this.errorCount = 0;
     this.responseMap = {};
+    this.active = false;
+    this.emitStatusInterval = 1;
   }
 
   start() {
@@ -43,7 +46,14 @@ class Metrics {
       self.responseCount++;
       self.errorCount++;
       self.mapStatus(data.status);
-    })
+    });
+
+    this.active = true;
+    this.emitStatus();
+  }
+
+  stop() {
+    this.active = false;
   }
 
   mapStatus(status) {
@@ -53,6 +63,14 @@ class Metrics {
       this.responseMap[status] = 0;
     }
     this.responseMap[status]++;
+  }
+
+  async emitStatus() {
+    await sleep(this.emitStatusInterval);
+    if(this.active) {
+      event.emit('metrics:status',this.statusString());
+      this.emitStatus();
+    }
   }
 
   toString() {
