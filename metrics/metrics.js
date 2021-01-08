@@ -101,7 +101,7 @@ class Metrics {
   }
 
   countString() {
-    const failureRate = (100 * this.errorCount / this.requestCount);
+    const failureRate = (100 * (this.requestCount - this.successCount) / this.requestCount);
 
     let countString = "";
     countString += "Requests:\t" + this.requestCount + '\n';
